@@ -1,0 +1,37 @@
+/* LobbyConnected.module.css */
+.usersList {
+    margin-bottom: 16px; /* Adjust as needed for space between the user list and the disconnect button */
+  }
+  
+/* LobbyConnected.module.css */
+.userWrapper {
+    margin-bottom: 4px; /* Space between user names */
+  }
+  
+  .user {
+    border: 3px solid grey; /* Thicker border */
+    padding: 8px;
+    display: inline-block; /* Border fits to the content */
+    border-radius: 4px; /* Optional: for rounded corners */
+  }
+
+  .muted {
+    border: 3px solid rgb(255, 0, 0); /* Thicker border */
+    padding: 8px;
+    display: inline-block; /* Border fits to the content */
+    border-radius: 4px; /* Optional: for rounded corners */
+  }
+
+  .audioDetected {
+    border: 3px solid rgb(0, 255, 157); /* Thicker border */
+    padding: 8px;
+    display: inline-block; /* Border fits to the content */
+    border-radius: 4px; /* Optional: for rounded corners */
+  }
+  
+  
+  .disconnectButton {
+    display: block; /* Ensure the button is a block-level element to appear on its own line */
+    /* Additional styling for the disconnect button */
+  }
+  
