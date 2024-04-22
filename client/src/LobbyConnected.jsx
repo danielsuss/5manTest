@@ -69,10 +69,41 @@ function LobbyConnected({ setState, username, roomID, peerList, localStream }) {
         listenForAnswers(peerList, roomID, username);
     }, [peerList, roomID, username])
 
+    const disconnectUser = () => {
+
+        for (let user in peerList) {
+            if (peerList.hasOwnProperty(user)) {
+                let peerConnection = peerList[user];
+                if (peerConnection.getStreams) {
+                    peerConnection.getStreams().forEach(stream => {
+                    stream.getTracks().forEach(track => track.stop());
+                    });
+                }
+
+                peerConnection.close();
+            }
+        }
+    }
+
     const disconnectButton = () => {
+        disconnectUser();
         post_disconnect_user(username, roomID);
         setState('UserEntry');
     }
+
+    useEffect(() => {
+        const pageClose = (e) => {
+            disconnectUser();
+            post_disconnect_user(username, roomID);
+        }
+
+        window.addEventListener('beforeunload', pageClose);
+
+        return () => {
+            window.removeEventListener('beforeunload', pageClose);
+        };
+    }, []);
+    
 
     const muteButton = () => {
         muteMicrophone(muted, localStream);
@@ -171,12 +202,12 @@ function LobbyConnected({ setState, username, roomID, peerList, localStream }) {
     return (
         <div>
             <p>connected to room {roomID}</p>
-            <AudioBubble key={"local"} user={username} mediaStream={localStream} />
+            <AudioBubble key={"local"} user={username} mediaStream={localStream} username={username} />
             <p>Other users:</p>
             <div className={styles.usersList}>
                 {users.map((user, index) => (
                     user !== username && (
-                        <AudioBubble key={index} user={user} mediaStream={streamList[user]} />
+                        <AudioBubble key={index} user={user} mediaStream={streamList[user]}  username={username} />
                     )
                 ))}
             </div>

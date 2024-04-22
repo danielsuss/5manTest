@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import styles from './style/LobbyConnected.module.css';
 
-function AudioBubble({ user, mediaStream }) {
+function AudioBubble({ user, mediaStream, username }) {
     const [bubbleClass, setBubbleClass] = useState(styles.user);
     const animationFrameRef = useRef();
     const audioRef = useRef(); // Create a ref for the audio element
@@ -9,7 +9,9 @@ function AudioBubble({ user, mediaStream }) {
     useEffect(() => {
         let analyser;
         if (mediaStream && audioRef.current) {
-            audioRef.current.srcObject = mediaStream; // Assign the media stream directly to the srcObject
+            if (user != username) {
+                audioRef.current.srcObject = mediaStream; // Assign the media stream directly to the srcObject
+            }
             analyser = newAnalyser(mediaStream);
             const checkAudio = () => checkAudioLevel(analyser, setBubbleClass, animationFrameRef);
             animationFrameRef.current = requestAnimationFrame(checkAudio);
