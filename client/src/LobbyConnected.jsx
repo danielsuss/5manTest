@@ -165,7 +165,12 @@ function LobbyConnected({ setState, username, roomID, peerList, localStream }) {
 
                         if (offerDescription && offerDescription.type && offerDescription.sdp) {
                             console.log('setting remote description');
-                            await pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
+                            try {
+                                await pc.setRemoteDescription(new RTCSessionDescription(offerDescription));
+                            } catch (err) {
+                                console.log(`error: ${err}`);
+                            }
+                            
                         } else {
                             console.error('Invalid offer description', offerDescription);
                         }
