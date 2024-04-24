@@ -1,5 +1,7 @@
 export async function initMicrophone() {
-    const localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const localStream = await navigator.mediaDevices.getUserMedia({ audio: {
+        echoCancellation: false,
+    } });
     return localStream;
 }
 
